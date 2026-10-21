@@ -26,7 +26,7 @@
                 │                           │
         ┌───────▼────────┐         ┌───────▼─────────┐
         │  Google OAuth  │         │ Backend Server  │
-        │  (Auth)        │         │ (Port 5000)     │
+        │  (Auth)        │         │ (Port 5001)     │
         └────────────────┘         └─────────────────┘
                 │                           │
                 └────────────────┬──────────┘
@@ -148,26 +148,29 @@ Currently using session storage. For scaling, add MongoDB:
 ## Deployment Architecture
 
 ```
-Production Setup:
-┌─────────────────┐
-│  Vercel/Netlify │ (Frontend)
-│   React Build   │
-└────────┬────────┘
-         │
-         │ API calls to
-         │
-┌────────▼────────┐
-│  Heroku/Railway │ (Backend)
-│ Express Server  │
-└────────┬────────┘
-         │
-         │ OAuth + API calls
-         │
-    ┌────▼────┐
-    │ Google  │
-    │ APIs    │
-    └─────────┘
+Production Setup (Render):
+┌──────────────────────────────┐
+│  Render Web Service          │
+│  Express server (server.js)  │
+│   - /auth/*, /api/*          │
+│   - serves client/dist       │
+│     (React build)            │
+└──────────────┬───────────────┘
+               │
+               │ OAuth + API calls
+               │
+          ┌────▼────┐
+          │ Google  │
+          │ APIs    │
+          └─────────┘
 ```
+
+Frontend and backend are deployed together as one Render Web Service
+(build: `npm run build`, start: `npm start`). Because the client is served
+from the same origin as the API, no separate frontend host or CORS setup is
+needed. The server detects Render via the `RENDER` env var (set automatically
+by Render) to enable `trust proxy`, secure cookies, and proxy-aware OAuth
+callback URLs, and listens on the `PORT` Render provides.
 
 ## File Structure
 
@@ -270,9 +273,9 @@ npm run install-all
 npm run dev
 
 # Frontend: http://localhost:3000
-# Backend: http://localhost:5000
+# Backend: http://localhost:5001
 
-# For production
+# For production (serves API + built client on http://localhost:5001)
 npm run build
 npm start
 ```
@@ -285,4 +288,4 @@ npm start
 | 401 Unauthorized | Missing Google scopes in OAuth strategy |
 | CORS errors | Check CORS origin in server.js |
 | Can't fetch assignments | Verify Classroom API is enabled in Google Cloud |
-| Port 5000 in use | Change PORT in .env or kill process |
+| Port 5001 in use | Change PORT in server/.env and the proxy target in client/vite.config.js, or kill the process |

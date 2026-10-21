@@ -38,7 +38,7 @@ npm run dev
 ```
 
 This will start:
-- Backend: http://localhost:5000
+- Backend: http://localhost:5001
 - Frontend: http://localhost:3000
 
 ## Step 5: Login & Test
@@ -52,7 +52,7 @@ This will start:
 
 **Blank page after login?**
 - Check browser console for errors (F12)
-- Ensure backend is running on port 5000
+- Ensure backend is running on port 5001
 - Check that CORS is configured correctly
 
 **Classroom API not working?**
@@ -61,21 +61,20 @@ This will start:
 - Make sure redirect URL matches exactly
 
 **Port already in use?**
-- Change PORT in `server/.env`
+- Change PORT in `server/.env` and the proxy target in `client/vite.config.js`
 - Update FRONTEND_URL if needed
 
 ## Project Structure
 ```
 Assignment_Scheduler/
 ├── client/          # React frontend (port 3000)
-├── server/          # Express backend (port 5000)
+├── server/          # Express backend (port 5001)
 ├── package.json     # Root scripts
 └── README.md        # Full documentation
 ```
 
 ## Next Steps
-- [ ] Deploy frontend to Vercel
-- [ ] Deploy backend to Heroku
+- [x] Deploy to Render (single web service; see README "Deployment")
 - [ ] Add database for caching
 - [ ] Implement grade tracking
 - [ ] Add calendar view

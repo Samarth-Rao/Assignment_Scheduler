@@ -114,11 +114,10 @@ Shows:
 
 ### Server (.env)
 ```
-PORT=5000
+PORT=5001
 NODE_ENV=development
 GOOGLE_CLIENT_ID=xxx
 GOOGLE_CLIENT_SECRET=xxx
-GOOGLE_CALLBACK_URL=http://localhost:5000/auth/google/callback
 FRONTEND_URL=http://localhost:3000
 SESSION_SECRET=xxx
 ```
@@ -137,20 +136,24 @@ SESSION_SECRET=xxx
 
 ## Deployment
 
-### Vercel (Frontend)
+The app is deployed on [Render](https://render.com) as a single **Web Service**: the Express server serves both the API and the built React client from `client/dist`. Live: https://assignment-scheduler-gbnm.onrender.com/
+
+Render service settings (configured in the Render dashboard; there is no `render.yaml`):
+
+- **Build command:** `npm run build` (installs client deps, builds the client with Vite, then installs server deps)
+- **Start command:** `npm start` (runs `node server/server.js`)
+- **Environment variables:** `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `SESSION_SECRET` (and optionally `FRONTEND_URL`, used only as the CORS origin in production). `PORT` is provided by Render automatically.
+
+Render also sets `RENDER=true`, which the server uses to detect production: it enables `trust proxy`, secure session cookies, and proxy-aware OAuth callback URLs. The Google OAuth callback is the relative path `/auth/google/callback`, so add `https://<your-service>.onrender.com/auth/google/callback` as an authorized redirect URI in Google Cloud Console.
+
+To run the production build locally:
+
 ```bash
-cd client
 npm run build
-# Connect to Vercel
+npm start   # serves the app on http://localhost:5001
 ```
 
-### Heroku (Backend)
-```bash
-cd server
-# Deploy to Heroku
-```
-
-Make sure to update `FRONTEND_URL` and `GOOGLE_CALLBACK_URL` in production.
+For this, also add `http://localhost:5001/auth/google/callback` as an authorized redirect URI.
 
 ## License
 
