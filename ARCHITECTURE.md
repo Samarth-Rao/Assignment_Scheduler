@@ -16,7 +16,7 @@
 │  │  │             │              │  - AssignmentCard    │   │  │
 │  │  └─────────────┴──────────────┴──────────────────────┘   │  │
 │  │                                                             │  │
-│  │  Theme: Dark Blue (#0f1419), Silver (#c7d2e0)            │  │
+│  │  Theme: Light green (#EFF4EC), accent (#4A7C59)          │  │
 │  │  Auto-sync: Every 5 minutes                              │  │
 │  └───────────────────────────────────────────────────────────┘  │
 │                            ↕ (HTTP/REST)                         │
@@ -136,7 +136,7 @@ Currently using session storage. For scaling, add MongoDB:
 - CORS configuration
 - Secure session cookies (httpOnly, secure flags)
 - User authentication required for API access
-- Read-only Classroom API scope
+- Read-only Classroom scopes for courses and submissions (coursework uses `classroom.coursework.me`, which is not read-only)
 
 🔒 **To Add:**
 - Database encryption for refresh tokens
@@ -191,11 +191,10 @@ Assignment_Scheduler/
 │   │   ├── App.jsx                 # App root, auth check
 │   │   ├── App.css
 │   │   ├── main.jsx                # Entry point
-│   │   └── index.css               # Global styles + dark theme
+│   │   └── index.css               # Global styles + light theme
 │   ├── index.html                  # HTML template
 │   ├── package.json
-│   ├── vite.config.js              # Build config + proxy
-│   └── .gitignore
+│   └── vite.config.js              # Build config + proxy
 │
 ├── server/                          # Express Backend
 │   ├── server.js                   # Express setup + OAuth strategy
@@ -203,8 +202,7 @@ Assignment_Scheduler/
 │   │   ├── auth.js                 # OAuth login/logout routes
 │   │   └── classroom.js            # Classroom API integration
 │   ├── package.json
-│   ├── .env.example                # Environment template
-│   └── .gitignore
+│   └── .env.example                # Environment template
 │
 ├── package.json                    # Root scripts
 ├── SETUP.md                        # Quick setup guide
@@ -231,13 +229,13 @@ useEffect(() => {
 - **Pending**: `submissionStatus !== 'TURNED_IN'`
 - **Submitted**: `submissionStatus === 'TURNED_IN'`
 
-### Dark Theme
+### Light Theme
 Uses CSS custom properties for easy theming:
 ```css
 :root {
-  --primary-dark: #0f1419;
-  --accent-blue: #2563eb;
-  --silver: #c7d2e0;
+  --bg: #EFF4EC;
+  --surface: #FAFDF8;
+  --accent: #4A7C59;
   /* ... more colors */
 }
 ```
@@ -262,7 +260,7 @@ Uses CSS custom properties for easy theming:
 
 ```bash
 # Clone repo
-git clone <repo>
+git clone https://github.com/Samarth-Rao/Assignment_Scheduler.git
 cd Assignment_Scheduler
 
 # Install all dependencies

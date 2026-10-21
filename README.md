@@ -42,7 +42,7 @@ https://assignment-scheduler-gbnm.onrender.com/
 2. Create a new project
 3. Enable the Google Classroom API
 4. Create OAuth 2.0 credentials (Web Application)
-5. Add authorized redirect URIs: `http://localhost:5000/auth/google/callback`
+5. Add authorized redirect URIs: `http://localhost:3000/auth/google/callback`
 6. Copy your Client ID and Client Secret
 
 #### 2. Backend Setup

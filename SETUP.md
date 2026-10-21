@@ -5,10 +5,9 @@
 2. Create a new project named "Assignment Scheduler"
 3. Search for and enable these APIs:
    - Google Classroom API
-   - Google+ API
 4. Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client ID"
 5. Choose "Web application"
-6. Add authorized redirect URIs: `http://localhost:5000/auth/google/callback`
+6. Add authorized redirect URIs: `http://localhost:3000/auth/google/callback`
 7. Download JSON credentials
 8. Copy `client_id` and `client_secret`
 
